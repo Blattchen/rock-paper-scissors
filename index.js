@@ -21,13 +21,17 @@ function computerPlay() {
 // otherwise player wins, winner and playerscore adjustment
 function playRound(computer, player) {
     if (computer === player) {
-        return winner = "", playerScore += 1, computerScore += 1
+        winner = ""
+        playerScore += 1
+        computerScore += 1
     } else if (computer === "paper" && player === "rock" || computer === "rock" && player === "scissors" || computer === "scissors" && player === "paper") {
-        return winner = "Computer", computerScore += 1
+        winner = "Computer"
+        computerScore += 1
     } else if (player !== "scissors" && player !== "rock" && player !== "paper") {
         console.log(`inavild input (${player}), please try again!`)
     } else {
-        return winner = "You", playerScore += 1
+        winner = "You"
+        playerScore += 1
     }
 }
 // function that starts a new game over 5 rounds and tells the winner of each and in total
@@ -36,13 +40,11 @@ function game() {
     for (let i = 1; i <= 5; i++) {
         let computerSelection = computerPlay()
         let playerSelection = prompt("Please choose Rock, Paper or Scissors", "Rock").toLocaleLowerCase()
-        playRound(computerSelection, playerSelection)
+        playRound(computerSelection, playerSelection);
 
-        if (winner === "") {
-            console.log(`I'ts a Tie, you picked ${playerSelection} and the computer ${computerSelection}`)
-        } else {
+        (winner === "") ? console.log(`I'ts a Tie, you picked ${playerSelection} and the computer ${computerSelection}`) :
             console.log(`The winner is ${winner}, you picked ${playerSelection} and the computer ${computerSelection}`)
-        }
+
         console.log(`The scores are: ${playerScore} You / ${computerScore} Computer`)
     }
     (playerScore > computerScore) ? console.log(`You won the Game! The scores are: ${playerScore} You / ${computerScore} Computer`) :
