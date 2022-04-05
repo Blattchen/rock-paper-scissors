@@ -19,7 +19,8 @@ function computerPlay() {
 // if computer wins, winner and playerscore adjustment
 // if the player input is  invalid, nothing
 // otherwise player wins, winner and playerscore adjustment
-function playRound(computer, player) {
+function playRound(player) {
+    let computer = computerPlay()
     if (computer === player) {
         winner = ""
         playerScore += 1
@@ -33,13 +34,15 @@ function playRound(computer, player) {
         winner = "You"
         playerScore += 1
     }
+    (winner === "") ? logging(`Tie!, you picked ${player} and the computer ${computer}`) :
+        logging(`${winner} won!, you picked ${player} and the computer ${computer}`)
 }
 // function that starts a new game over 5 rounds and tells the winner of each and in total
-function game() {
+function game(choice) {
     console.log(`Game intitalized! Best of 5 Wins!`)
     for (let i = 1; i <= 5; i++) {
         let computerSelection = computerPlay()
-        let playerSelection = prompt("Please choose Rock, Paper or Scissors", "Rock").toLocaleLowerCase()
+        let playerSelection = choice//prompt("Please choose Rock, Paper or Scissors", "Rock").toLocaleLowerCase()
         playRound(computerSelection, playerSelection);
 
         (winner === "") ? console.log(`I'ts a Tie, you picked ${playerSelection} and the computer ${computerSelection}`) :
@@ -55,4 +58,17 @@ function game() {
 }
 
 // initializes the game
-game()
+// game()
+
+//add 3 buttons
+const rockBtn = document.getElementById("rock")
+const paperBtn = document.querySelector("#paper")
+const scissorsBtn = document.querySelector("#scisssors")
+const log = document.getElementById("log")
+function logging(text) {
+    log.textContent = text
+}
+// call function playRound on click 
+rockBtn.addEventListener("click", function () {
+    playRound("rock")
+})
