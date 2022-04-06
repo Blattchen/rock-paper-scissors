@@ -1,14 +1,12 @@
 // create array with possible outcomes
 const CHOICES = ["rock", "paper", "scissors"]
 
-// define Player and Cmputer Score
+// define Player and Cmputer Score & winner
 let playerScore = 0
 let computerScore = 0
 let winner = ""
 
 // function that randomly returns rock papaer or scissors
-// generate random numbers between 0 and 2
-// use random number as index for the outcome array
 function computerPlay() {
     let randomNum = Math.floor(Math.random() * 3)
     return CHOICES[randomNum]
@@ -23,8 +21,6 @@ function playRound(player) {
     let computer = computerPlay()
     if (computer === player) {
         winner = ""
-        playerScore += 1
-        computerScore += 1
     } else if (computer === "paper" && player === "rock" || computer === "rock" && player === "scissors" || computer === "scissors" && player === "paper") {
         winner = "Computer"
         computerScore += 1
@@ -37,38 +33,45 @@ function playRound(player) {
     (winner === "") ? logging(`Tie!, you picked ${player} and the computer ${computer}`) :
         logging(`${winner} won!, you picked ${player} and the computer ${computer}`)
 }
-// function that starts a new game over 5 rounds and tells the winner of each and in total
-function game(choice) {
-    console.log(`Game intitalized! Best of 5 Wins!`)
-    for (let i = 1; i <= 5; i++) {
-        let computerSelection = computerPlay()
-        let playerSelection = choice//prompt("Please choose Rock, Paper or Scissors", "Rock").toLocaleLowerCase()
-        playRound(computerSelection, playerSelection);
-
-        (winner === "") ? console.log(`I'ts a Tie, you picked ${playerSelection} and the computer ${computerSelection}`) :
-            console.log(`The winner is ${winner}, you picked ${playerSelection} and the computer ${computerSelection}`)
-
-        console.log(`The scores are: ${playerScore} You / ${computerScore} Computer`)
-    }
-    (playerScore > computerScore) ? console.log(`You won the Game! The scores are: ${playerScore} You / ${computerScore} Computer`) :
-        (playerScore === computerScore) ? console.log(`It's a Draw! The scores are: ${playerScore} You / ${computerScore} Computer`) :
-            console.log(`Game over! you lost the gme. The scores are: ${playerScore} You / ${computerScore} Computer`)
-    console.log(`Refresh to start another Best of 5`)
-
-}
-
-// initializes the game
-// game()
 
 //add 3 buttons
 const rockBtn = document.getElementById("rock")
 const paperBtn = document.querySelector("#paper")
-const scissorsBtn = document.querySelector("#scisssors")
+const scissorsBtn = document.querySelector("#scissors")
+//add 2 divs
 const log = document.getElementById("log")
+const score = document.getElementById("score")
+
+// prints the score and tells the winner after 5 rounds and resets the scores
+function printScore() {
+    score.textContent = `You ${playerScore} /  ${computerScore} Computer`
+    if (playerScore >= 5 || computerScore >= 5) {
+        if (playerScore > computerScore) {
+            score.textContent = `You won the Game! The scores are: ${playerScore} You / ${computerScore} Computer`
+        } else if (playerScore === computerScore) {
+            score.textContent = `It's a Draw! The scores are: ${playerScore} You / ${computerScore} Computer`
+        } else {
+            score.textContent = `Game over! you lost the gme. The scores are: ${playerScore} You / ${computerScore} Computer`
+        }
+        playerScore = 0
+        computerScore = 0
+    }
+
+}
+// logs the text inside the div
 function logging(text) {
     log.textContent = text
 }
 // call function playRound on click 
 rockBtn.addEventListener("click", function () {
     playRound("rock")
+    printScore()
+})
+paperBtn.addEventListener("click", function () {
+    playRound("paper")
+    printScore()
+})
+scissorsBtn.addEventListener("click", function () {
+    playRound("scissors")
+    printScore()
 })
